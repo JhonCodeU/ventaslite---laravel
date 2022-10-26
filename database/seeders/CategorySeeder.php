@@ -21,17 +21,17 @@ class CategorySeeder extends Seeder
 
         Category::create([
             'name' => 'Tennis',
-            'image' => 'https://dummyimage.com/200x150/5c5756/fff.png'
+            'image' => 'https://picsum.photos/id/203/200/200'
         ]);
 
         Category::create([
             'name' => 'Cellphones',
-            'image' => 'https://dummyimage.com/200x150/5c5756/fff.png'
+            'image' => 'https://picsum.photos/id/400/200/200'
         ]);
 
         Category::create([
             'name' => 'Computers',
-            'image' => 'https://dummyimage.com/200x150/5c5756/fff.png'
+            'image' => 'https://picsum.photos/id/107/200/200'
         ]);
     }
 }

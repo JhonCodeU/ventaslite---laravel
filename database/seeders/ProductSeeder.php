@@ -16,8 +16,8 @@ class ProductSeeder extends Seeder
     {
         Product::create([
             'name' => 'LARAVEL Y LIVEWIRE',
-            'cost' => 200000,
-            'price' => 350000,
+            'cost' => 3000,
+            'price' => 2500,
             'barcode' => '75010065987',
             'stock' => 1000,
             'alerts' => 10,
@@ -27,8 +27,8 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'name' => 'RUNNING NIKE',
-            'cost' => 280000,
-            'price' => 350000,
+            'cost' => 500,
+            'price' => 470,
             'barcode' => '76010065987',
             'stock' => 1000,
             'alerts' => 10,
@@ -38,8 +38,8 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'name' => 'IPHONE 11',
-            'cost' => 1900000,
-            'price' => 2500000,
+            'cost' => 2000,
+            'price' => 1980,
             'barcode' => '77010065987',
             'stock' => 1000,
             'alerts' => 10,
@@ -49,8 +49,8 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'name' => 'PC GAMER',
-            'cost' => 7900000,
-            'price' => 13500000,
+            'cost' => 6000,
+            'price' => 5000,
             'barcode' => '70010065987',
             'stock' => 1000,
             'alerts' => 10,

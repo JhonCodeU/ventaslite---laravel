@@ -21,6 +21,11 @@ class CategoriesController extends Component
         $this->componentName = 'Categorías';
     }
 
+    public function paginationView()
+    {
+        return 'vendor.livewire.bootstrap';
+    }
+
     public function render()
     {
         $categories = Category::when($this->search, function ($query) {
