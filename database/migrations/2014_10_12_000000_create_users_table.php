@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->string('phone', 10)->nullable();
+            $table->string('phone', 15)->nullable();
             $table->string('email', 100)->unique();
             $table->enum('profile', ['ADMIN', 'EMPLOYEE'])->default('ADMIN');
             $table->enum('status', ['ACTIVE', 'LOCKED'])->default('ACTIVE');
