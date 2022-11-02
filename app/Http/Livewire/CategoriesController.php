@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
+use App\Helpers\GlobalApp;
 use App\Models\Category;
-use Livewire\WithPagination;
+use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class CategoriesController extends Component
 {
@@ -13,7 +14,7 @@ class CategoriesController extends Component
     use WithFileUploads;
 
     public $name, $search, $image, $selected_id, $pageTitle, $componentName;
-    private $pagination = 2;
+    private $pagination = 7;
 
     protected $rules = [
         'name' => 'required|unique:categories|min:3',
@@ -24,6 +25,8 @@ class CategoriesController extends Component
         'name.unique' => 'El nombre de la categoría ya existe',
         'name.min' => 'El nombre de la categoría debe tener al menos 3 caracteres',
     ];
+
+    protected $listeners = ['Destroy'];
 
     public function mount()
     {
@@ -41,6 +44,8 @@ class CategoriesController extends Component
         $categories = Category::when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->orderBy('id', 'desc')->paginate($this->pagination);
+
+        //$categories = Category::all();
 
         return view('livewire.category.categories', compact('categories'))
             ->extends('layouts.theme.app')
@@ -65,8 +70,7 @@ class CategoriesController extends Component
         $data['name'] = $this->name;
 
         if ($this->image) {
-            $imageName = uniqid() . '_.' . $this->image->getClientOriginalName();
-            $this->image->storeAs('public/categories', $imageName);
+            $imageName = GlobalApp::saveFile($this->image, 'categories');
             $data['image'] = $imageName;
         }
 
@@ -85,15 +89,29 @@ class CategoriesController extends Component
         $data['name'] = $this->name;
 
         if ($this->image) {
-            $imageName = uniqid() . '_.' . $this->image->getClientOriginalName();
-            $this->image->storeAs('public/categories', $imageName);
-            $data['image'] = $imageName;
+            $fileimage = GlobalApp::saveFile($this->image, 'categories');
+            $data['image'] = $fileimage;
+
+            if ($this->image != null) {
+                $category = Category::find($this->selected_id);
+                unlink('storage/categories/' . $category->image);
+            }
         }
 
         Category::find($this->selected_id)->update($data);
 
         $this->resetUI();
         $this->emit('category-updated', 'category updated');
+    }
+
+    public function Destroy(Category $category)
+    {
+        if ($category->image != null) {
+            unlink('storage/categories/' . $category->image);
+        }
+
+        $category->delete();
+        $this->resetUI();
     }
 
     public function resetUI()
